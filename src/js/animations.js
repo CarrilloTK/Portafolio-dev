@@ -10,6 +10,7 @@ export function initAnimations() {
     skillBarAnimations()
     timelineAnimations()
     cardHoverAnimations()
+    aboutCardAnimations()
     parallaxAnimations()
   }, 100)
 }
@@ -268,6 +269,52 @@ function cardHoverAnimations() {
         duration: 0.3,
         ease: 'power2.out'
       })
+    })
+  })
+}
+
+function aboutCardAnimations() {
+  const cards = document.querySelectorAll('.card-about')
+
+  cards.forEach(card => {
+    const img = card.querySelector('img')
+
+    card.addEventListener('mouseenter', () => {
+      gsap.to(card, {
+        y: -6,
+        borderColor: 'rgba(245, 158, 11, 0.3)',
+        boxShadow: '0 20px 40px rgba(245, 158, 11, 0.15)',
+        duration: 0.4,
+        ease: 'power2.out'
+      })
+      if (img) {
+        gsap.to(img, {
+          scale: 1.03,
+          opacity: 0.85,
+          filter: 'brightness(1.15)',
+          duration: 0.4,
+          ease: 'power2.out'
+        })
+      }
+    })
+
+    card.addEventListener('mouseleave', () => {
+      gsap.to(card, {
+        y: 0,
+        borderColor: 'rgba(255, 255, 255, 0.1)',
+        boxShadow: '0 20px 40px rgba(0, 0, 0, 0.3)',
+        duration: 0.4,
+        ease: 'power2.out'
+      })
+      if (img) {
+        gsap.to(img, {
+          scale: 1,
+          opacity: 0.6,
+          filter: 'brightness(1)',
+          duration: 0.4,
+          ease: 'power2.out'
+        })
+      }
     })
   })
 }
