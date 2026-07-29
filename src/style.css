@@ -1,0 +1,348 @@
+@import "tailwindcss";
+
+
+/* ================================
+   CUSTOM PROPERTIES
+   ================================ */
+:root {
+  --primary: #F59E0B;
+  --secondary: #FBBF24;
+  --accent: #D97706;
+  --dark-100: #1A1A1A;
+  --dark-200: #242424;
+  --dark-300: #111111;
+}
+
+/* ================================
+    BASE STYLES
+    ================================ */
+
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  overflow-x: hidden;
+}
+
+.font-heading {
+  font-family: "Onest Variable", sans-serif;
+}
+
+/* ================================
+    PORTFOLIO BACKGROUND
+    ================================ */
+.portfolio-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-color: #0a0a0a;
+  background-image:
+    /* Grid pattern */
+    linear-gradient(to right, rgba(79, 79, 79, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(128, 128, 128, 0.03) 1px, transparent 1px),
+    /* Glow superior - zona principal de claridad */
+    radial-gradient(ellipse 800px 500px at 50% 0%, rgba(218, 183, 122, 0.06), transparent 50%),
+    /* Glow lateral izquierdo - profundidad */
+    radial-gradient(ellipse 600px 600px at 15% 50%, rgba(218, 183, 122, 0.04), transparent 70%),
+    /* Glow inferior derecho - equilibrio */
+    radial-gradient(ellipse 500px 500px at 85% 80%, rgba(218, 183, 122, 0.07), transparent 70%);
+  background-size:
+    14px 24px,
+    14px 24px,
+    100% 100%,
+    100% 100%,
+    100% 100%;
+}
+
+/* ================================
+   LENIS SMOOTH SCROLL
+   ================================ */
+html.lenis, html.lenis body {
+  height: auto;
+  min-height: 100vh;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+/* ================================
+   CUSTOM SCROLLBAR
+   ================================ */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--dark-300);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--secondary);
+}
+
+/* ================================
+   SECTION STYLES
+   ================================ */
+.section {
+  padding: 6rem 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .section {
+    padding: 8rem 2rem;
+  }
+}
+
+/* ================================
+   GRADIENT TEXT
+   ================================ */
+.gradient-text {
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ================================
+   HERO WORD
+   ================================ */
+.word {
+  display: inline-block;
+  background: linear-gradient(135deg, #F59E0B 0%, #D97706 20%, #6b7280 45%, #6B7280 65%, #D97706 85%);
+  background-size: 200% 200%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  will-change: transform, opacity, filter;
+}
+
+/* ================================
+   GLASS CARD
+   ================================ */
+.glass-card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+  transition: all 0.3s ease;
+}
+
+.glass-card:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: #B7B6B7;
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* ================================
+   GLOW BUTTON
+   ================================ */
+.btn-glow {
+  position: relative;
+  padding: 0.75rem 2rem;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  border-radius: 0.5rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.btn-glow::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.btn-glow:hover::before {
+  opacity: 1;
+}
+
+.btn-glow:hover {
+  box-shadow: 0 0 30px rgba(245, 158, 11, 0.4);
+  transform: translateY(-2px);
+}
+
+/* ================================
+   OUTLINE BUTTON
+   ================================ */
+.btn-outline {
+  padding: 0.75rem 2rem;
+  border: 2px solid var(--primary);
+  border-radius: 0.5rem;
+  font-weight: 600;
+  color: var(--primary);
+  transition: all 0.3s ease;
+}
+
+.btn-outline:hover {
+  background: var(--primary);
+  color: white;
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.3);
+}
+
+/* ================================
+   TIMELINE
+   ================================ */
+.timeline-line {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--primary), var(--accent));
+  transform: translateX(-50%);
+}
+
+@media (max-width: 768px) {
+  .timeline-line {
+    left: 0;
+  }
+}
+
+/* ================================
+   FORM INPUT
+   ================================ */
+.form-input {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.5rem;
+  color: white;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.form-input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.form-input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* ================================
+   SKILL BAR
+   ================================ */
+.skill-bar {
+  height: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.skill-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  border-radius: 4px;
+  transition: width 1.5s ease;
+  width: 0;
+}
+
+/* ================================
+   NAV LINK HOVER UNDERLINE
+   ================================ */
+.nav-link {
+  position: relative;
+  padding-bottom: 4px;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--primary);
+  border-radius: 1px;
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::after,
+.nav-link:focus-visible::after {
+  width: 100%;
+}
+
+.nav-link.active::after {
+  width: 100%;
+}
+
+/* ================================
+   HAMBURGER MENU
+   ================================ */
+.hamburger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: white;
+  transition: all 0.3s ease;
+  margin: 5px 0;
+}
+
+.hamburger.active span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* ================================
+   SCROLL INDICATOR
+   ================================ */
+@keyframes scroll-dot {
+  0%, 100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(3px);
+    opacity: 0.5;
+  }
+}
+
+.scroll-dot {
+  animation: scroll-dot 1.5s ease-in-out infinite;
+}
+
+#hero > a[href="#about"] {
+  animation: none;
+}
+
+/* ================================
+   HERO BADGE
+   ================================ */
+
+.social-icon {
+  will-change: transform;
+}
+.btn-outline {
+  will-change: transform;
+}
