@@ -11,6 +11,7 @@ export function initAnimations() {
     timelineAnimations()
     cardHoverAnimations()
     aboutCardAnimations()
+    skillsCardAnimations()
     parallaxAnimations()
   }, 100)
 }
@@ -315,6 +316,31 @@ function aboutCardAnimations() {
           ease: 'power2.out'
         })
       }
+    })
+  })
+}
+
+function skillsCardAnimations() {
+  const cards = document.querySelectorAll('.card-skills')
+
+  cards.forEach(card => {
+    card.addEventListener('mouseenter', () => {
+      gsap.to(card, {
+        y: -6,
+        borderColor: 'rgba(245, 158, 11, 0.3)',
+        boxShadow: '0 20px 40px rgba(245, 158, 11, 0.15)',
+        duration: 0.4,
+        ease: 'power2.out'
+      })
+    })
+    card.addEventListener('mouseleave', () => {
+      gsap.to(card, {
+        y: 0,
+        borderColor: 'rgba(255, 255, 255, 0.1)',
+        boxShadow: '0 20px 40px rgba(0, 0, 0, 0.3)',
+        duration: 0.4,
+        ease: 'power2.out'
+      })
     })
   })
 }
