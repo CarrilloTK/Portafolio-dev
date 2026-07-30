@@ -32,7 +32,7 @@ function loadPartials() {
     const container = document.getElementById(id)
     if (!container) return Promise.resolve()
 
-    return fetch(`/src/partials/${file}`)
+    return fetch(`/partials/${file}`)
       .then(res => res.text())
       .then(html => {
         container.innerHTML = html

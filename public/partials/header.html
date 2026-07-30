@@ -1,0 +1,117 @@
+<!-- ================================
+     HEADER - Navbar Dinámico
+     Tailwind + Alpine.js + GSAP + Lucide
+     ================================ -->
+<header id="navbar" class="fixed top-0 left-0 w-full z-50 text-amber-100 p-4" x-data="header"
+  @scroll.window="checkScroll()"
+  :class="scrolled ? 'bg-dark-100/95 backdrop-blur-md shadow-lg py-3' : 'bg-transparent py-5'">
+
+  <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+
+    <!-- Logo -->
+    <a href="#hero"
+      class="nav-link text-sm font-medium transition-colors duration-300 focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-4 rounded"
+      id="nav-logo">
+      <img src="/src/assets/img/logopor.png" alt="Kevin Logo" class="h-15 w-auto" />
+    </a>
+
+    <!-- Desktop Menu -->
+    <ul
+      class="hidden md:flex items-center bg-white/5 backdrop-blur-md rounded-full border border-white/10 px-10 py-3 gap-9"
+      id="nav-links">
+      <li>
+        <a href="#hero"
+          class="nav-link text-sm font-medium transition-colors duration-300 focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-4 rounded"
+          :class="currentSection === 'hero' ? 'text-primary' : 'text-white hover:text-primary'">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="inline-block mr-1.5 -mt-0.5">
+            <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8" />
+            <path
+              d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+          </svg>
+          Inicio
+        </a>
+      </li>
+      <li>
+        <a href="#about"
+          class="nav-link text-sm font-medium transition-colors duration-300 focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-4 rounded"
+          :class="currentSection === 'about' ? 'text-primary' : 'text-white/60 hover:text-primary'">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="inline-block mr-1.5 -mt-0.5">
+            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+          Sobre mi
+        </a>
+      </li>
+      <li>
+        <a href="#skills"
+          class="nav-link text-sm font-medium transition-colors duration-300 focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-4 rounded"
+          :class="currentSection === 'skills' ? 'text-primary' : 'text-white/60 hover:text-primary'">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="inline-block mr-1.5 -mt-0.5">
+            <polyline points="16 18 22 12 16 6"></polyline>
+            <polyline points="8 6 2 12 8 18"></polyline>
+          </svg>
+          Skills
+        </a>
+      </li>
+      <li>
+        <a href="#projects"
+          class="nav-link text-sm font-medium transition-colors duration-300 focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-4 rounded"
+          :class="currentSection === 'projects' ? 'text-primary' : 'text-white/60 hover:text-primary'">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="inline-block mr-1.5 -mt-0.5">
+            <path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+            <rect width="20" height="14" x="2" y="6" rx="2"></rect>
+          </svg>
+          Proyectos
+        </a>
+      </li>
+      <li>
+        <a href="#contact"
+          class="nav-link text-sm font-medium transition-colors duration-300 focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-4 rounded"
+          :class="currentSection === 'contact' ? 'text-primary' : 'text-white/60 hover:text-primary'">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="inline-block mr-1.5 -mt-0.5">
+            <rect width="20" height="16" x="2" y="4" rx="2"></rect>
+            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+          </svg>
+          Contacto
+        </a>
+      </li>
+    </ul>
+
+    <!-- Dark Mode Toggle -->
+    <button
+      class="p-2 text-white/40 hover:text-primary hover:rotate-45 transition-all duration-300 focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-4 rounded"
+      @click="darkMode = !darkMode" aria-label="Toggle dark mode">
+      <template x-if="darkMode">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="4" />
+          <path d="M12 2v2" />
+          <path d="M12 20v2" />
+          <path d="m4.93 4.93 1.41 1.41" />
+          <path d="m17.66 17.66 1.41 1.41" />
+          <path d="M2 12h2" />
+          <path d="M20 12h2" />
+          <path d="m6.34 17.66-1.41 1.41" />
+          <path d="m19.07 4.93-1.41 1.41" />
+        </svg>
+      </template>
+      <template x-if="!darkMode">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+        </svg>
+      </template>
+    </button>
+
+
+
