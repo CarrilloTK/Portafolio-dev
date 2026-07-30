@@ -7,11 +7,11 @@ export function initAnimations() {
   setTimeout(() => {
     headerAnimation()
     heroAnimations()
-    skillBarAnimations()
     timelineAnimations()
     cardHoverAnimations()
     aboutCardAnimations()
     skillsCardAnimations()
+    projectsCardAnimations()
     parallaxAnimations()
   }, 100)
 }
@@ -194,26 +194,6 @@ function heroAnimations() {
   }
 }
 
-function skillBarAnimations() {
-  const skillBars = document.querySelectorAll('.skill-bar-fill')
-
-  skillBars.forEach((bar) => {
-    const width = bar.getAttribute('data-width')
-
-    ScrollTrigger.create({
-      trigger: bar,
-      start: 'top 85%',
-      onEnter: () => {
-        gsap.to(bar, {
-          width: `${width}%`,
-          duration: 1.5,
-          ease: 'power3.out'
-        })
-      }
-    })
-  })
-}
-
 function timelineAnimations() {
   const timelineLine = document.querySelector('#timeline-line')
 
@@ -322,6 +302,31 @@ function aboutCardAnimations() {
 
 function skillsCardAnimations() {
   const cards = document.querySelectorAll('.card-skills')
+
+  cards.forEach(card => {
+    card.addEventListener('mouseenter', () => {
+      gsap.to(card, {
+        y: -6,
+        borderColor: 'rgba(245, 158, 11, 0.3)',
+        boxShadow: '0 20px 40px rgba(245, 158, 11, 0.15)',
+        duration: 0.4,
+        ease: 'power2.out'
+      })
+    })
+    card.addEventListener('mouseleave', () => {
+      gsap.to(card, {
+        y: 0,
+        borderColor: 'rgba(255, 255, 255, 0.1)',
+        boxShadow: '0 20px 40px rgba(0, 0, 0, 0.3)',
+        duration: 0.4,
+        ease: 'power2.out'
+      })
+    })
+  })
+}
+
+function projectsCardAnimations() {
+  const cards = document.querySelectorAll('.card-project')
 
   cards.forEach(card => {
     card.addEventListener('mouseenter', () => {

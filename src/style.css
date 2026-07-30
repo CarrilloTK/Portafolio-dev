@@ -140,7 +140,6 @@ html.lenis, html.lenis body {
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 1rem;
-  transition: all 0.3s ease;
 }
 
 .glass-card:hover {
@@ -156,10 +155,25 @@ html.lenis, html.lenis body {
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 1rem;
-  transition: all 0.3s ease;
 }
 
 .card-skills:hover {
+  background: rgba(32, 29, 29, 0.08);
+  border-color: #787778;
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.card-project {
+  position: relative;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.card-project:hover {
   background: rgba(32, 29, 29, 0.08);
   border-color: #787778;
   transform: translateY(-4px);
@@ -173,7 +187,6 @@ html.lenis, html.lenis body {
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 1rem;
-  transition: all 0.3s ease;
 }
 
 .card-about::after {
