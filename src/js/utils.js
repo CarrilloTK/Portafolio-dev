@@ -1,33 +1,6 @@
 export function initUtils() {
-  scrollTopButton()
   activeNavLink()
   smoothScroll()
-}
-
-// ================================
-// SCROLL TO TOP BUTTON
-// ================================
-function scrollTopButton() {
-  const scrollTopBtn = document.querySelector('#scroll-top')
-
-  if (!scrollTopBtn) return
-
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 500) {
-      scrollTopBtn.style.opacity = '1'
-      scrollTopBtn.style.pointerEvents = 'auto'
-    } else {
-      scrollTopBtn.style.opacity = '0'
-      scrollTopBtn.style.pointerEvents = 'none'
-    }
-  })
-
-  scrollTopBtn.addEventListener('click', () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    })
-  })
 }
 
 // ================================
