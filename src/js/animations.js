@@ -1,12 +1,15 @@
-import { gsap } from 'gsap'
+﻿import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
+ScrollTrigger.config({ ignoreMobileResize: true })
+window.addEventListener('load', () => ScrollTrigger.refresh())
 
 export function initAnimations() {
   setTimeout(() => {
     headerAnimation()
     heroAnimations()
+    revealAnimations()
     timelineAnimations()
     parallaxAnimations()
   }, 100)
@@ -14,26 +17,8 @@ export function initAnimations() {
 
 function headerAnimation() {
   const navbar = document.querySelector('#navbar')
-  const logo = document.querySelector('#nav-logo')
   const links = document.querySelectorAll('#nav-links li')
-  const herotitle = document.querySelectorAll('#hero-title')
 
-  // gsap.from(logo,{
-  //   x: -100,
-  //   rotate: 180,
-  //   scale: 1,
-  //   duration: 1,
-  //   delay: 0
-  // })
-  
-  // gsap.from(links,{
-  //   x: -100,
-  //   fill: 'blue',
-  //   scale: 1,
-  //   duration: 0.9,
-  //   delay: 0,
-  // })
-  
   if (navbar) {
     gsap.fromTo(navbar,
       { y: -80, opacity: 0 },
@@ -53,7 +38,6 @@ function heroAnimations() {
   const heroText = document.querySelector('#hero-text')
   if (!heroText) return
 
-  const badge = heroText.querySelector('.hero-badge')
   const words = heroText.querySelectorAll('h1 .word')
   const subtitle1 = heroText.querySelector('.hero-subtitle')
   const subtitle2 = heroText.querySelector('.hero-subtitle-secondary')
@@ -62,17 +46,13 @@ function heroAnimations() {
   const scrollIndicator = document.querySelector('#hero > a[href="#about"]')
   const blobs = document.querySelectorAll('#hero .animate-float')
 
-  gsap.set([badge, subtitle1, subtitle2, socialIcons, ctaButtons, scrollIndicator], { opacity: 0 })
+  gsap.set([subtitle1, subtitle2, socialIcons, ctaButtons, scrollIndicator], { opacity: 0 })
   gsap.set(blobs, { opacity: 0, scale: 0.85 })
   if (words.length) {
     gsap.set(words, { opacity: 0, x: -60 })
   }
 
   const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
-
-  if (badge) {
-    tl.fromTo(badge, { y: -20 }, { y: 0, opacity: 1, duration: 0.6, ease: 'power2.out' }, 0.0)
-  }
 
   if (words.length) {
     tl.to(words, {
@@ -190,6 +170,28 @@ function heroAnimations() {
   }
 }
 
+function revealAnimations() {
+  document.querySelectorAll('[data-reveal]').forEach(el => {
+    const delay = (parseFloat(el.getAttribute('data-reveal-delay')) || 0) / 1000
+    gsap.fromTo(el,
+      { opacity: 0, y: 40 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.9,
+        delay,
+        ease: 'power3.out',
+        clearProps: 'all',
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 85%',
+          once: true
+        }
+      }
+    )
+  })
+}
+
 function timelineAnimations() {
   const timelineLine = document.querySelector('#timeline-line')
 
@@ -210,7 +212,7 @@ function timelineAnimations() {
     )
   }
 
-  const timelineItems = document.querySelectorAll('.glass-card')
+  const timelineItems = document.querySelectorAll('#experience .glass-card')
   timelineItems.forEach((card, index) => {
     gsap.fromTo(card,
       { opacity: 0, x: index % 2 === 0 ? -50 : 50 },
@@ -237,25 +239,8 @@ function parallaxAnimations() {
         trigger: blob,
         start: 'top bottom',
         end: 'bottom top',
-        scrub: 2
+        scrub: 1
       }
     })
-  })
-
-  const sectionHeaders = document.querySelectorAll('h2')
-  sectionHeaders.forEach(header => {
-    gsap.fromTo(header,
-      { opacity: 0, y: 30 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: header,
-          start: 'top 85%'
-        }
-      }
-    )
   })
 }

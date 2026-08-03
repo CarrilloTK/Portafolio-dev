@@ -1,23 +1,21 @@
-<!-- ================================
-     HEADER - Navbar Dinámico
+﻿<!-- ================================
+     HEADER - Navbar DinÃ¡mico
      Tailwind + Alpine.js + GSAP + Lucide
      ================================ -->
 <header id="navbar" class="fixed top-0 left-0 w-full z-50 text-amber-100 p-4" x-data="header"
-  @scroll.window="checkScroll()"
-  :class="scrolled ? 'bg-dark-100/95 backdrop-blur-md shadow-lg py-3' : 'bg-transparent py-5'">
+  @scroll.window="checkScroll()" :class="scrolled ? 'py-1.5' : 'py-1.5'">
 
-  <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+  <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between ">
 
     <!-- Logo -->
     <a href="#hero"
       class="nav-link text-sm font-medium transition-colors duration-300 focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-4 rounded"
       id="nav-logo">
-      <img src="img/logopor.png" alt="Kevin Logo" class="h-15 w-auto" />
+      <img src="img/logopor.png" alt="Kevin Logo" class="h-15 w-auto" />  
     </a>
 
     <!-- Desktop Menu -->
-    <ul
-      class="hidden md:flex items-center bg-white/5 backdrop-blur-md rounded-full border border-white/10 px-10 py-3 gap-9"
+    <ul class="hidden md:flex items-center bg-[#100F0D] rounded-full border border-white/10 px-10 py-3 gap-9"
       id="nav-links">
       <li>
         <a href="#hero"
@@ -89,7 +87,7 @@
 
     <!-- Dark Mode Toggle -->
     <button
-      class="p-2 text-white/40 hover:text-primary hover:rotate-45 transition-all duration-300 focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-4 rounded"
+      class="p-2 text-white/80 hover:text-primary hover:rotate-45 transition-all duration-300 focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-4 rounded"
       @click="darkMode = !darkMode" aria-label="Toggle dark mode">
       <template x-if="darkMode">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
@@ -112,6 +110,3 @@
         </svg>
       </template>
     </button>
-
-
-

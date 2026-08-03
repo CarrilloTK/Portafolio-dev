@@ -1,4 +1,8 @@
 import Lenis from 'lenis'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+const HEADER_OFFSET = 96
+const EASE_OUT_QUART = (t) => 1 - Math.pow(1 - t, 4)
 
 export function initLenis() {
   const lenis = new Lenis({
@@ -6,31 +10,38 @@ export function initLenis() {
     easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     direction: 'vertical',
     gestureDirection: 'vertical',
-    smooth: true,
-    mouseMultiplier: 1,
+    smoothWheel: true,
+    wheelMultiplier: 1.0,
     smoothTouch: false,
     touchMultiplier: 2,
     infinite: false
   })
 
+  lenis.on('scroll', ScrollTrigger.update)
   function raf(time) {
     lenis.raf(time)
     requestAnimationFrame(raf)
   }
-
   requestAnimationFrame(raf)
 
-  // Handle anchor links
+  function scrollToSection(target) {
+    const distance = Math.abs(target.getBoundingClientRect().top - HEADER_OFFSET)
+    const duration = Math.min(2.4, Math.max(1.0, distance / 850))
+    lenis.scrollTo(target, {
+      offset: -HEADER_OFFSET,
+      duration,
+      easing: EASE_OUT_QUART
+    })
+  }
+
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
+      const href = this.getAttribute('href')
+      if (!href || href === '#') return
       e.preventDefault()
-      const target = document.querySelector(this.getAttribute('href'))
+      const target = document.querySelector(href)
       if (target) {
-        lenis.scrollTo(target, {
-          offset: 0,
-          duration: 1.5,
-          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
-        })
+        scrollToSection(target)
       }
     })
   })

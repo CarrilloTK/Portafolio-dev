@@ -1,26 +1,31 @@
 export function initUtils() {
   activeNavLink()
-  smoothScroll()
 }
 
 // ================================
 // ACTIVE NAV LINK
 // ================================
 function activeNavLink() {
-  const sections = document.querySelectorAll('section[id]')
+  const sections = Array.from(document.querySelectorAll('section[id]'))
   const navLinks = document.querySelectorAll('#nav-links a')
+  let sectionTops = []
+
+  const cacheTops = () => {
+    sectionTops = sections.map(s => ({ id: s.getAttribute('id'), top: s.offsetTop }))
+  }
+  cacheTops()
+  window.addEventListener('resize', cacheTops)
+  window.addEventListener('load', cacheTops)
 
   window.addEventListener('scroll', () => {
+    const y = window.scrollY
     let current = ''
 
-    sections.forEach(section => {
-      const sectionTop = section.offsetTop
-      const sectionHeight = section.clientHeight
-
-      if (scrollY >= sectionTop - 200) {
-        current = section.getAttribute('id')
+    for (const s of sectionTops) {
+      if (y >= s.top - 200) {
+        current = s.id
       }
-    })
+    }
 
     navLinks.forEach(link => {
       link.classList.remove('text-white')
@@ -29,27 +34,6 @@ function activeNavLink() {
       if (link.getAttribute('href') === `#${current}`) {
         link.classList.remove('text-white/70')
         link.classList.add('text-white')
-      }
-    })
-  })
-}
-
-// ================================
-// SMOOTH SCROLL FOR ANCHOR LINKS
-// ================================
-function smoothScroll() {
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-      const href = this.getAttribute('href')
-      if (href === '#') return
-
-      const target = document.querySelector(href)
-      if (target) {
-        e.preventDefault()
-        target.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
-        })
       }
     })
   })

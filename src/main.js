@@ -1,10 +1,9 @@
-import Lenis from 'lenis'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import AOS from 'aos'
 import { initAnimations } from './js/animations.js'
 import { initLenis } from './js/lenis.js'
 import { initUtils } from './js/utils.js'
+import { initCarousel } from './js/carousel.js'
 import './js/header.js'
 import Alpine from 'alpinejs'
 import '@fontsource-variable/onest/wght.css'
@@ -47,14 +46,9 @@ function loadPartials() {
 document.addEventListener('DOMContentLoaded', () => {
   loadPartials().then(() => {
     Alpine.start()
-    initAnimations()
-    initLenis()
-    initUtils()
-    AOS.init({
-      duration: 800,
-      easing: 'ease-out-cubic',
-      once: true,
-      offset: 100
-    })
+    try { initAnimations() } catch (err) { console.error('initAnimations error:', err) }
+    try { initLenis() } catch (err) { console.error('initLenis error:', err) }
+    try { initUtils() } catch (err) { console.error('initUtils error:', err) }
+    try { initCarousel() } catch (err) { console.error('initCarousel error:', err) }
   })
 })
