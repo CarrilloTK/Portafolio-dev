@@ -39,6 +39,7 @@ function heroAnimations() {
   if (!heroText) return
 
   const words = heroText.querySelectorAll('h1 .word')
+  const badge = heroText.querySelector('.hero-badge')
   const subtitle1 = heroText.querySelector('.hero-subtitle')
   const subtitle2 = heroText.querySelector('.hero-subtitle-secondary')
   const socialIcons = heroText.querySelectorAll('.social-icons a')
@@ -46,13 +47,17 @@ function heroAnimations() {
   const scrollIndicator = document.querySelector('#hero > a[href="#about"]')
   const blobs = document.querySelectorAll('#hero .animate-float')
 
-  gsap.set([subtitle1, subtitle2, socialIcons, ctaButtons, scrollIndicator], { opacity: 0 })
+  gsap.set([badge, subtitle1, subtitle2, socialIcons, ctaButtons, scrollIndicator], { opacity: 0 })
   gsap.set(blobs, { opacity: 0, scale: 0.85 })
   if (words.length) {
     gsap.set(words, { opacity: 0, x: -60 })
   }
 
   const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
+
+  if (badge) {
+    tl.fromTo(badge, { y: -15, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6 }, 0.05)
+  }
 
   if (words.length) {
     tl.to(words, {
