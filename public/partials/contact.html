@@ -30,7 +30,7 @@
           </div>
           <div>
             <p class="text-white/50 text-sm">Email</p>
-            <a href="kevincarrillo1609@gmail.com"
+            <a href="mailto:kevincarrillo1609@gmail.com"
               class="text-white hover:text-amber-400 transition-colors">kevincarrillo1609@gmail.com</a>
           </div>
         </div>
@@ -75,14 +75,31 @@
         nombre: '',
         email: '',
         mensaje: '',
-        enviado: false,
-        enviar() {
-          if (this.nombre && this.email && this.mensaje) {
-            this.enviado = true;
-            setTimeout(() => { this.enviado = false }, 3000);
-            this.nombre = '';
-            this.email = '';
-            this.mensaje = '';
+        estado: 'idle',
+        errorMsg: '',
+        async enviar() {
+          if (!this.nombre || !this.email || !this.mensaje) return;
+          this.estado = 'enviando';
+          try {
+            const res = await fetch('https://fo', {
+              method: 'POST',
+              headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+              body: JSON.stringify({ name: this.nombre, _replyto: this.email, message: this.mensaje })
+            });
+            if (res.ok) {
+              this.estado = 'enviado';
+              this.nombre = '';
+              this.email = '';
+              this.mensaje = '';
+              setTimeout(() => { this.estado = 'idle' }, 4000);
+            } else {
+              const data = await res.json();
+              this.estado = 'error';
+              this.errorMsg = data.errors?.map(e => e.message).join(', ') || 'Error al enviar. Inténtalo de nuevo.';
+            }
+          } catch {
+            this.estado = 'error';
+            this.errorMsg = 'No se pudo enviar. Revisa tu conexión.';
           }
         }
       }">
@@ -101,10 +118,15 @@
             required></textarea>
         </div>
 
-        <button type="submit" class="btn-glow w-full text-black relative z-10" :class="enviado && 'bg-green-500'">
-          <span x-show="!enviado">Enviar Mensaje</span>
-          <span x-show="enviado">Mensaje Enviado!</span>
+        <button type="submit" class="btn-glow w-full text-black relative z-10"
+          :class="estado === 'enviado' && 'bg-green-500'"
+          :disabled="estado === 'enviando'">
+          <span x-show="estado !== 'enviado' && estado !== 'enviando'">Enviar Mensaje</span>
+          <span x-show="estado === 'enviando'">Enviando...</span>
+          <span x-show="estado === 'enviado'">¡Mensaje Enviado!</span>
         </button>
+        <p x-show="estado === 'error'" x-text="errorMsg"
+          class="text-red-400 text-sm text-center"></p>
       </form>
     </div>
   </div>
