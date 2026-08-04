@@ -81,7 +81,7 @@
           if (!this.nombre || !this.email || !this.mensaje) return;
           this.estado = 'enviando';
           try {
-            const res = await fetch('https://fo', {
+            const res = await fetch('https://formspree.io/f/xyeggorb', {
               method: 'POST',
               headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
               body: JSON.stringify({ name: this.nombre, _replyto: this.email, message: this.mensaje })
@@ -97,7 +97,8 @@
               this.estado = 'error';
               this.errorMsg = data.errors?.map(e => e.message).join(', ') || 'Error al enviar. Inténtalo de nuevo.';
             }
-          } catch {
+          } catch (e) {
+            console.error('Formspree error:', e)
             this.estado = 'error';
             this.errorMsg = 'No se pudo enviar. Revisa tu conexión.';
           }
