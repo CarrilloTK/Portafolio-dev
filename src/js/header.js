@@ -8,9 +8,18 @@ document.addEventListener('alpine:init', () => {
 
     init() {
       this.cacheTops()
-      window.addEventListener('resize', () => this.cacheTops())
       this.checkScroll()
-      window.addEventListener('scroll', () => this.checkScroll())
+      window.addEventListener('resize', () => this.cacheTops())
+      window.addEventListener('scroll', () => this.onScroll(), { passive: true })
+    },
+
+    onScroll() {
+      if (this._ticking) return
+      this._ticking = true
+      requestAnimationFrame(() => {
+        this.checkScroll()
+        this._ticking = false
+      })
     },
 
     cacheTops() {

@@ -6,6 +6,7 @@ const EASE_OUT_QUART = (t) => 1 - Math.pow(1 - t, 4)
 
 export function initLenis() {
   const lenis = new Lenis({
+    autoRaf: true,
     duration: 1.2,
     easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     direction: 'vertical',
@@ -18,11 +19,6 @@ export function initLenis() {
   })
 
   lenis.on('scroll', ScrollTrigger.update)
-  function raf(time) {
-    lenis.raf(time)
-    requestAnimationFrame(raf)
-  }
-  requestAnimationFrame(raf)
 
   function scrollToSection(target) {
     const distance = Math.abs(target.getBoundingClientRect().top - HEADER_OFFSET)

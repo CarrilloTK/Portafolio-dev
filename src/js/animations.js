@@ -5,14 +5,35 @@ gsap.registerPlugin(ScrollTrigger)
 ScrollTrigger.config({ ignoreMobileResize: true })
 window.addEventListener('load', () => ScrollTrigger.refresh())
 
+function forceShow() {
+  gsap.set([
+    '#navbar',
+    '#nav-links li',
+    '.hero-badge',
+    '.hero-subtitle',
+    '.hero-subtitle-secondary',
+    '.social-icons a',
+    '.hero-ctas a',
+    '#hero > a[href="#about"]',
+    '.word',
+    '#hero .hero-blob',
+    '[data-reveal]',
+    '#timeline-line',
+    '#experience .glass-card'
+  ], { opacity: 1, clearProps: 'all' })
+}
+
 export function initAnimations() {
-  setTimeout(() => {
-    headerAnimation()
-    heroAnimations()
-    revealAnimations()
-    timelineAnimations()
-    parallaxAnimations()
-  }, 100)
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    forceShow()
+    return
+  }
+
+  headerAnimation()
+  heroAnimations()
+  revealAnimations()
+  timelineAnimations()
+  parallaxAnimations()
 }
 
 function headerAnimation() {
@@ -45,13 +66,9 @@ function heroAnimations() {
   const socialIcons = heroText.querySelectorAll('.social-icons a')
   const ctaButtons = heroText.querySelectorAll('.hero-ctas a')
   const scrollIndicator = document.querySelector('#hero > a[href="#about"]')
-  const blobs = document.querySelectorAll('#hero .animate-float')
+  const blobs = document.querySelectorAll('#hero .hero-blob')
 
-  gsap.set([badge, subtitle1, subtitle2, socialIcons, ctaButtons, scrollIndicator], { opacity: 0 })
   gsap.set(blobs, { opacity: 0, scale: 0.85 })
-  if (words.length) {
-    gsap.set(words, { opacity: 0, x: -60 })
-  }
 
   const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
 
@@ -60,23 +77,23 @@ function heroAnimations() {
   }
 
   if (words.length) {
-    tl.to(words, {
+    tl.fromTo(words, { opacity: 0, x: -60 }, {
       opacity: 1, x: 0,
       duration: 1.2, stagger: 0.1, ease: "power3.inOut"
     }, 0.15)
   }
 
   if (subtitle1) {
-    tl.fromTo(subtitle1, { y: 20 }, { y: 0, opacity: 1, duration: 0.7 }, 0.35)
+    tl.fromTo(subtitle1, { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7 }, 0.35)
   }
 
   if (subtitle2) {
-    tl.fromTo(subtitle2, { y: 15 }, { y: 0, opacity: 1, duration: 0.6 }, 0.45)
+    tl.fromTo(subtitle2, { y: 15, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6 }, 0.45)
   }
 
   if (socialIcons.length) {
     tl.fromTo(socialIcons,
-      { scale: 0.3 },
+      { scale: 0.3, opacity: 0 },
       { scale: 1, opacity: 1, duration: 0.4, stagger: 0.06, ease: 'back.out(1.7)' },
       0.55
     )
@@ -84,7 +101,7 @@ function heroAnimations() {
 
   if (ctaButtons.length) {
     tl.fromTo(ctaButtons,
-      { y: 15 },
+      { y: 15, opacity: 0 },
       { y: 0, opacity: 1, duration: 0.5, stagger: 0.08 },
       0.7
     )
@@ -92,7 +109,7 @@ function heroAnimations() {
 
   if (scrollIndicator) {
     tl.fromTo(scrollIndicator,
-      { y: 10 },
+      { y: 10, opacity: 0 },
       { y: 0, opacity: 1, duration: 0.5, ease: 'power2.out' },
       0.85
     )
@@ -228,7 +245,8 @@ function timelineAnimations() {
         ease: 'power3.out',
         scrollTrigger: {
           trigger: card,
-          start: 'top 85%'
+          start: 'top 85%',
+          once: true
         }
       }
     )
@@ -236,8 +254,8 @@ function timelineAnimations() {
 }
 
 function parallaxAnimations() {
-  const blobs = document.querySelectorAll('.animate-float')
-  blobs.forEach((blob, index) => {
+  const blobs = document.querySelectorAll('.hero-blob')
+  blobs.forEach(blob => {
     gsap.to(blob, {
       y: 100,
       scrollTrigger: {

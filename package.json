@@ -13,8 +13,7 @@
     "alpinejs": "^3.14.9",
     "embla-carousel": "^8.6.0",
     "gsap": "^3.12.7",
-    "lenis": "^1.1.18",
-    "lucide": "^0.469.0"
+    "lenis": "^1.1.18"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.7",
