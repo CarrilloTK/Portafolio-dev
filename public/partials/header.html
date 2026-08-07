@@ -1,8 +1,8 @@
-﻿<!-- ================================
-     HEADER - Navbar DinÃ¡mico
+<!-- ================================
+     HEADER - Navbar Dinámico
      Tailwind + Alpine.js + GSAP + Lucide
      ================================ -->
-<header id="navbar" class="fixed top-0 left-0 w-full z-50 text-amber-100 p-4" x-data="header"
+<header id="navbar" class="fixed top-0 left-0 w-full z-50 text-fg p-4" x-data="header"
   :class="scrolled ? 'py-1.5' : 'py-1.5'">
 
   <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between ">
@@ -11,16 +11,16 @@
     <a href="#hero"
       class="nav-link text-sm font-medium transition-colors duration-300 focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-4 rounded"
       id="nav-logo">
-      <img src="/img/logopor.png" alt="Kevin Logo" width="181" height="122" decoding="async" class="h-15 w-auto" />  
+      <img src="/img/logopor.png" alt="Kevin Logo" width="181" height="122" decoding="async" class="logo-img h-15 w-auto" />  
     </a>
 
     <!-- Desktop Menu -->
-    <ul class="hidden md:flex items-center bg-[#100F0D] rounded-full border border-white/10 px-10 py-3 gap-9"
+    <ul class="hidden md:flex items-center bg-nav rounded-full border border-line px-10 py-3 gap-9"
       id="nav-links">
       <li>
         <a href="#hero"
           class="nav-link text-sm font-medium transition-colors duration-300 focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-4 rounded"
-          :class="currentSection === 'hero' ? 'text-primary' : 'text-white hover:text-primary'">
+          :class="currentSection === 'hero' ? 'text-primary' : 'text-fg hover:text-primary'">
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
             class="inline-block mr-1.5 -mt-0.5">
@@ -34,7 +34,7 @@
       <li>
         <a href="#about"
           class="nav-link text-sm font-medium transition-colors duration-300 focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-4 rounded"
-          :class="currentSection === 'about' ? 'text-primary' : 'text-white/60 hover:text-primary'">
+          :class="currentSection === 'about' ? 'text-primary' : 'text-muted hover:text-primary'">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
             class="inline-block mr-1.5 -mt-0.5">
@@ -47,7 +47,7 @@
       <li>
         <a href="#skills"
           class="nav-link text-sm font-medium transition-colors duration-300 focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-4 rounded"
-          :class="currentSection === 'skills' ? 'text-primary' : 'text-white/60 hover:text-primary'">
+          :class="currentSection === 'skills' ? 'text-primary' : 'text-muted hover:text-primary'">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
             class="inline-block mr-1.5 -mt-0.5">
@@ -60,7 +60,7 @@
       <li>
         <a href="#projects"
           class="nav-link text-sm font-medium transition-colors duration-300 focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-4 rounded"
-          :class="currentSection === 'projects' ? 'text-primary' : 'text-white/60 hover:text-primary'">
+          :class="currentSection === 'projects' ? 'text-primary' : 'text-muted hover:text-primary'">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
             class="inline-block mr-1.5 -mt-0.5">
@@ -73,7 +73,7 @@
       <li>
         <a href="#contact"
           class="nav-link text-sm font-medium transition-colors duration-300 focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-4 rounded"
-          :class="currentSection === 'contact' ? 'text-primary' : 'text-white/60 hover:text-primary'">
+          :class="currentSection === 'contact' ? 'text-primary' : 'text-muted hover:text-primary'">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
             class="inline-block mr-1.5 -mt-0.5">
@@ -87,9 +87,9 @@
 
     <!-- Dark Mode Toggle -->
     <button
-      class="p-2 text-white/80 hover:text-primary hover:rotate-45 transition-all duration-300 focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-4 rounded"
-      @click="darkMode = !darkMode" aria-label="Toggle dark mode">
-      <template x-if="darkMode">
+      class="p-2 text-strong hover:text-primary hover:rotate-45 transition-all duration-300 focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-4 rounded"
+      @click="$store.theme.toggle()" aria-label="Toggle dark mode">
+      <template x-if="$store.theme.theme === 'dark'">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="12" cy="12" r="4" />
@@ -103,7 +103,7 @@
           <path d="m19.07 4.93-1.41 1.41" />
         </svg>
       </template>
-      <template x-if="!darkMode">
+      <template x-if="$store.theme.theme !== 'dark'">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />

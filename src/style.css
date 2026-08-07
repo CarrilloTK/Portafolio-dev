@@ -46,15 +46,135 @@
 
 
 /* ================================
-   CUSTOM PROPERTIES
+   THEME TOKENS (Design Tokens)
+   :root = DARK (default del sitio)
+   .light = overrides del modo claro
    ================================ */
 :root {
+  color-scheme: dark;
+
+  /* Brand */
   --primary: #F59E0B;
   --secondary: #FBBF24;
   --accent: #D97706;
+
+  /* Legacy dark shades */
   --dark-100: #1A1A1A;
   --dark-200: #242424;
   --dark-300: #111111;
+
+  /* Backgrounds */
+  --bg: #111111;
+  --bg-canvas: #0a0a0a;
+  --nav-bg: #100F0D;
+  --surface: rgba(255, 255, 255, 0.05);
+  --surface-hover: rgba(32, 29, 29, 0.08);
+  --surface-strong: rgba(255, 255, 255, 0.08);
+
+  /* Text */
+  --text: #ffffff;
+  --text-strong: rgba(255, 255, 255, 0.8);
+  --text-label: rgba(255, 255, 255, 0.7);
+  --text-muted: rgba(255, 255, 255, 0.6);
+  --text-faint: rgba(255, 255, 255, 0.5);
+  --text-subtle: rgba(255, 255, 255, 0.4);
+
+  /* Lines & borders */
+  --border: rgba(255, 255, 255, 0.1);
+  --border-strong: #787778;
+  --border-brand: rgba(245, 158, 11, 0.25);
+
+  /* Shadows & glows */
+  --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.3);
+  --shadow-card: 0 0 25px rgba(245, 158, 11, 0.1), 0 20px 40px rgba(0, 0, 0, 0.35);
+
+  /* Background pattern */
+  --grid-line: rgba(79, 79, 79, 0.06);
+  --grid-line-alt: rgba(128, 128, 128, 0.03);
+  --glow-top: rgba(218, 183, 122, 0.06);
+  --glow-left: rgba(218, 183, 122, 0.04);
+  --glow-bottom: rgba(218, 183, 122, 0.07);
+
+  /* Word gradient mid */
+  --word-gray: #6b7280;
+
+  /* Accents */
+  --cyan: #22d3ee;
+  --green: #4ade80;
+  --danger: #f87171;
+
+  /* Button outline hover */
+  --btn-outline-hover-bg: #0A0A0A;
+  --btn-outline-hover-text: #ffffff;
+}
+
+.light {
+  color-scheme: light;
+  --bg: #FAF8F5;
+  --bg-canvas: #ebeae94b;
+  --nav-bg: rgba(255, 255, 255, 0.92);
+  --surface: #e98b0814;
+  --surface-hover: #e98b086a;
+  --surface-strong: #FFFFFF;
+
+  --text: #080808;
+  --text-strong: rgb(7, 7, 7);
+  --text-label: rgba(7, 7, 7, 0.986);
+  --text-muted: rgb(7, 7, 7);
+  --text-faint: rgb(7, 7, 7);
+  --text-subtle: rgb(7, 7, 7);
+
+  --border: rgba(28, 25, 23, 0.12);
+  --border-strong: rgba(217, 119, 6, 0.5);
+  --border-brand: rgba(217, 119, 6, 0.45);
+
+  --shadow-hover: 0 12px 30px rgba(30, 20, 0, 0.08);
+  --shadow-card: 0 0 20px rgba(245, 158, 11, 0.15), 0 12px 30px rgba(30, 20, 0, 0.08);
+
+  --grid-line: rgba(0, 0, 0, 0.05);
+  --grid-line-alt: rgba(0, 0, 0, 0.03);
+  --glow-top: rgba(245, 158, 11, 0.08);
+  --glow-left: rgba(245, 158, 11, 0.05);
+  --glow-bottom: rgba(245, 158, 11, 0.09);
+
+  --word-gray: #57534E;
+  --cyan: #0E7490;
+  --green: #15803D;
+  --danger: #DC2626;
+
+  --btn-outline-hover-bg: var(--primary);
+  --btn-outline-hover-text: var(--color-black);
+
+  .btn-outline{
+    background: var(--primary);
+    border-color: var(--primary);
+    color: #FFFFFF;
+  }
+}
+
+/* ================================
+   THEME TRANSITION (solo durante el cambio)
+   Variable de control: ajusta la duracion/easing de la transicion
+   de los colores al alternar entre dark y light.
+   ================================ */
+:root {
+  --theme-transition-duration: 200ms;
+  --theme-transition-easing: ease;
+}
+
+html.theme-transition,
+html.theme-transition *,
+html.theme-transition *::before,
+html.theme-transition *::after {
+  transition:
+    background-color var(--theme-transition-duration) var(--theme-transition-easing),
+    color var(--theme-transition-duration) var(--theme-transition-easing) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.theme-transition * {
+    transition: none !important;
+  }
 }
 
 /* ================================
@@ -77,17 +197,17 @@ body {
   position: fixed;
   inset: 0;
   z-index: -1;
-  background-color: #0a0a0a;
+  background-color: var(--bg-canvas);
   background-image:
     /* Grid pattern */
-    linear-gradient(to right, rgba(79, 79, 79, 0.06) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(128, 128, 128, 0.03) 1px, transparent 1px),
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line-alt) 1px, transparent 1px),
     /* Glow superior - zona principal de claridad */
-    radial-gradient(ellipse 800px 500px at 50% 0%, rgba(218, 183, 122, 0.06), transparent 50%),
+    radial-gradient(ellipse 800px 500px at 50% 0%, var(--glow-top), transparent 50%),
     /* Glow lateral izquierdo - profundidad */
-    radial-gradient(ellipse 600px 600px at 15% 50%, rgba(218, 183, 122, 0.04), transparent 70%),
+    radial-gradient(ellipse 600px 600px at 15% 50%, var(--glow-left), transparent 70%),
     /* Glow inferior derecho - equilibrio */
-    radial-gradient(ellipse 500px 500px at 85% 80%, rgba(218, 183, 122, 0.07), transparent 70%);
+    radial-gradient(ellipse 500px 500px at 85% 80%, var(--glow-bottom), transparent 70%);
   background-size:
     14px 24px,
     14px 24px,
@@ -120,7 +240,7 @@ html.lenis, html.lenis body {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--dark-300);
+  background: var(--bg);
 }
 
 ::-webkit-scrollbar-thumb {
@@ -162,7 +282,7 @@ html.lenis, html.lenis body {
    ================================ */
 .word {
   display: inline-block;
-  background: linear-gradient(135deg, #F59E0B 0%, #D97706 20%, #6b7280 45%, #6B7280 65%, #D97706 85%);
+  background: linear-gradient(135deg, #F59E0B 0%, #D97706 20%, var(--word-gray) 45%, var(--word-gray) 65%, #D97706 85%);
   background-size: 200% 200%;
   background-clip: text;
   -webkit-background-clip: text;
@@ -207,22 +327,22 @@ html.lenis, html.lenis body {
    GLASS CARD
    ================================ */
 .glass-card {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 1rem;
 }
 
 .glass-card:hover {
-  background: rgba(32, 29, 29, 0.08);
-  border-color: #787778;
+  background: var(--surface-hover);
+  border-color: var(--border-strong);
   transform: translateY(-4px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  box-shadow: var(--shadow-hover);
 }
 
 .card-skills {
   position: relative;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 1rem;
   transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
@@ -240,10 +360,10 @@ html.lenis, html.lenis body {
 }
 
 .card-skills:hover {
-  background: linear-gradient(180deg, rgba(245, 158, 11, 0.03), rgba(32, 29, 29, 0.08));
-  border-color: rgba(245, 158, 11, 0.25);
+  background: linear-gradient(180deg, rgba(245, 158, 11, 0.03), var(--surface-hover));
+  border-color: var(--border-brand);
   transform: translateY(-4px);
-  box-shadow: 0 0 25px rgba(245, 158, 11, 0.1), 0 20px 40px rgba(0, 0, 0, 0.35);
+  box-shadow: var(--shadow-card);
 }
 
 .card-skills:hover::before {
@@ -252,8 +372,8 @@ html.lenis, html.lenis body {
 
 .card-project {
   position: relative;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 1rem;
   overflow: hidden;
   transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
@@ -272,10 +392,10 @@ html.lenis, html.lenis body {
 }
 
 .card-project:hover {
-  background: linear-gradient(180deg, rgba(245, 158, 11, 0.03), rgba(32, 29, 29, 0.08));
-  border-color: rgba(245, 158, 11, 0.25);
+  background: linear-gradient(180deg, rgba(245, 158, 11, 0.03), var(--surface-hover));
+  border-color: var(--border-brand);
   transform: translateY(-4px);
-  box-shadow: 0 0 25px rgba(245, 158, 11, 0.1), 0 20px 40px rgba(0, 0, 0, 0.35);
+  box-shadow: var(--shadow-card);
 }
 
 .card-project:hover::before {
@@ -285,8 +405,8 @@ html.lenis, html.lenis body {
 .card-about {
   position: relative;
   overflow: hidden;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 1rem;
   transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
@@ -298,7 +418,7 @@ html.lenis, html.lenis body {
   left: 0;
   right: 0;
   height: 50%;
-  background: linear-gradient(to top, #111111 0%, transparent 100%);
+  background: linear-gradient(to top, var(--bg) 0%, transparent 100%);
   pointer-events: none;
   z-index: 1;
   border-radius: inherit;
@@ -317,10 +437,10 @@ html.lenis, html.lenis body {
 }
 
 .card-about:hover {
-  background: linear-gradient(180deg, rgba(245, 158, 11, 0.03), rgba(32, 29, 29, 0.08));
-  border-color: rgba(245, 158, 11, 0.25);
+  background: linear-gradient(180deg, rgba(245, 158, 11, 0.03), var(--surface-hover));
+  border-color: var(--border-brand);
   transform: translateY(-4px);
-  box-shadow: 0 0 25px rgba(245, 158, 11, 0.1), 0 20px 40px rgba(0, 0, 0, 0.35);
+  box-shadow: var(--shadow-card);
 }
 
 .card-about:hover::before {
@@ -367,8 +487,8 @@ html.lenis, html.lenis body {
 }
 
 .btn-outline:hover {
-  background: #0A0A0A;
-  color: white;
+  background: var(--btn-outline-hover-bg);
+  color: var(--btn-outline-hover-text);
   box-shadow: 0 0 20px rgba(245, 158, 11, 0.3);
 }
 
@@ -397,10 +517,10 @@ html.lenis, html.lenis body {
 .form-input {
   width: 100%;
   padding: 0.875rem 1rem;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 0.5rem;
-  color: white;
+  color: var(--text);
   font-size: 1rem;
   transition: all 0.3s ease;
   outline: none;
@@ -409,11 +529,17 @@ html.lenis, html.lenis body {
 .form-input:focus {
   border-color: var(--primary);
   box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--surface-strong);
 }
 
 .form-input::placeholder {
-  color: rgba(255, 255, 255, 0.4);
+  color: var(--text-subtle);
+}
+
+/* Logo del header: el PNG es blanco (diseñado para dark).
+   En modo claro se invierte para mantener legibilidad. */
+.light .logo-img {
+  filter: invert(1);
 }
 
 /* ================================

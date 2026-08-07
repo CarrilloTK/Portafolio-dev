@@ -170,10 +170,10 @@ function heroAnimations() {
 
   if (scrollIndicator) {
     scrollIndicator.addEventListener('mouseenter', () => {
-      gsap.to(scrollIndicator, { scale: 1.2, color: '#F59E0B', duration: 0.3, ease: 'power2.out', overwrite: 'auto' })
+      gsap.to(scrollIndicator, { scale: 1.2, color: 'var(--primary)', duration: 0.3, ease: 'power2.out', overwrite: 'auto' })
     })
     scrollIndicator.addEventListener('mouseleave', () => {
-      gsap.to(scrollIndicator, { scale: 1, color: 'rgba(255,255,255,0.5)', duration: 0.3, ease: 'power2.out', overwrite: 'auto' })
+      gsap.to(scrollIndicator, { scale: 1, color: 'var(--text-faint)', duration: 0.3, ease: 'power2.out', overwrite: 'auto' })
     })
   }
 

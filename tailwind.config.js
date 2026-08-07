@@ -5,7 +5,6 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
     "./public/partials/**/*.html"
   ],
-  darkMode: 'class',
   theme: {
     extend: {
       fontFamily: {
@@ -15,11 +14,26 @@ export default {
       colors: {
         primary: '#F59E0B',
         secondary: '#FBBF24',
+        accent: '#D97706',
         dark: {
           100: '#1A1A1A',
           200: '#242424',
           300: '#111111'
-        }
+        },
+        bg: 'var(--bg)',
+        canvas: 'var(--bg-canvas)',
+        nav: 'var(--nav-bg)',
+        surface: 'var(--surface)',
+        fg: 'var(--text)',
+        strong: 'var(--text-strong)',
+        label: 'var(--text-label)',
+        muted: 'var(--text-muted)',
+        faint: 'var(--text-faint)',
+        subtle: 'var(--text-subtle)',
+        line: 'var(--border)',
+        cyan: 'var(--cyan)',
+        green: 'var(--green)',
+        danger: 'var(--danger)'
       },
       animation: {
         'float': 'float 6s ease-in-out infinite',

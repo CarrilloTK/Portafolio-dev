@@ -3,6 +3,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { initAnimations } from './js/animations.js'
 import { initLenis } from './js/lenis.js'
 import './js/header.js'
+import './js/theme.js'
 import Alpine from 'alpinejs'
 
 // Register GSAP plugins

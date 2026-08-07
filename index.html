@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" class="dark">
+<html lang="es">
 
 <head>
   <meta charset="UTF-8">
@@ -7,6 +7,18 @@
   <title>Kevin Carrillo | Full Stack Developer - Proyectos Web</title>
   <meta name="description"
     content="Portafolio de Kevin Carrillo, egresado de Ingeniería de Sistemas con proyectos en Laravel, PHP, MySQL, WordPress y desarrollo web Full Stack.">
+
+  <!-- Theme (anti-FOUC): aplica el modo claro SOLO si el usuario lo guardó.
+       El default es dark, por lo que no requiere clase extra. -->
+  <script>
+    (function () {
+      try {
+        if (localStorage.getItem('theme') === 'light') {
+          document.documentElement.classList.add('light')
+        }
+      } catch (e) {}
+    })()
+  </script>
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -21,7 +33,7 @@
   <link rel="stylesheet" href="/src/style.css">
 </head>
 
-<body class="min-h-screen w-full bg-[#111111]" x-data="{ darkMode: true }">
+<body class="min-h-screen w-full bg-bg">
 
   <!-- Background -->
   <div class="portfolio-bg"></div>
