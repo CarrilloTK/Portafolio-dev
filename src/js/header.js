@@ -9,7 +9,22 @@ document.addEventListener('alpine:init', () => {
     init() {
       this.cacheTops()
       this.checkScroll()
-      window.addEventListener('resize', () => this.cacheTops())
+
+      this.$watch('isOpen', (open) => {
+        document.body.style.overflow = open ? 'hidden' : ''
+        this.$nextTick(() => {
+          if (open) {
+            this.$refs.mobilePanel?.querySelector('a[href]')?.focus()
+          } else {
+            this.$refs.hamburger?.focus()
+          }
+        })
+      })
+
+      window.addEventListener('resize', () => {
+        this.cacheTops()
+        if (window.innerWidth >= 768) this.isOpen = false
+      })
       window.addEventListener('scroll', () => this.onScroll(), { passive: true })
     },
 

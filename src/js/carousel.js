@@ -39,4 +39,10 @@ export function initCarousel() {
   next?.addEventListener('click', () => embla.scrollNext())
 
   window.addEventListener('load', () => embla.reInit())
+
+  let resizeTimer
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer)
+    resizeTimer = setTimeout(() => embla.reInit(), 200)
+  })
 }

@@ -33,7 +33,6 @@ export function initAnimations() {
   heroAnimations()
   revealAnimations()
   timelineAnimations()
-  parallaxAnimations()
 }
 
 function headerAnimation() {
@@ -67,61 +66,11 @@ function heroAnimations() {
   const ctaButtons = heroText.querySelectorAll('.hero-ctas a')
   const scrollIndicator = document.querySelector('#hero > a[href="#about"]')
   const blobs = document.querySelectorAll('#hero .hero-blob')
+  const hero = document.querySelector('#hero')
 
   gsap.set(blobs, { opacity: 0, scale: 0.85 })
 
-  const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
-
-  if (badge) {
-    tl.fromTo(badge, { y: -15, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6 }, 0.05)
-  }
-
-  if (words.length) {
-    tl.fromTo(words, { opacity: 0, x: -60 }, {
-      opacity: 1, x: 0,
-      duration: 1.2, stagger: 0.1, ease: "power3.inOut"
-    }, 0.15)
-  }
-
-  if (subtitle1) {
-    tl.fromTo(subtitle1, { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7 }, 0.35)
-  }
-
-  if (subtitle2) {
-    tl.fromTo(subtitle2, { y: 15, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6 }, 0.45)
-  }
-
-  if (socialIcons.length) {
-    tl.fromTo(socialIcons,
-      { scale: 0.3, opacity: 0 },
-      { scale: 1, opacity: 1, duration: 0.4, stagger: 0.06, ease: 'back.out(1.7)' },
-      0.55
-    )
-  }
-
-  if (ctaButtons.length) {
-    tl.fromTo(ctaButtons,
-      { y: 15, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.5, stagger: 0.08 },
-      0.7
-    )
-  }
-
-  if (scrollIndicator) {
-    tl.fromTo(scrollIndicator,
-      { y: 10, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.5, ease: 'power2.out' },
-      0.85
-    )
-  }
-
-  if (blobs.length) {
-    tl.to(blobs, {
-      opacity: 0.6, scale: 1,
-      duration: 1.2, ease: 'power2.out'
-    }, 1.0)
-  }
-
+  // Persistent effects (both breakpoints)
   if (scrollIndicator) {
     gsap.to(scrollIndicator, {
       y: -8,
@@ -177,41 +126,125 @@ function heroAnimations() {
     })
   }
 
-  const hero = document.querySelector('#hero')
-  if (hero) {
-    gsap.to(hero, {
-      y: 60,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: hero,
-        start: 'top top',
-        end: 'bottom top',
-        scrub: 1
-      }
+  function buildEntrance(wordOffset) {
+    const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
+
+    if (badge) {
+      tl.fromTo(badge, { y: -15, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6 }, 0.05)
+    }
+
+    if (words.length) {
+      tl.fromTo(words, { opacity: 0, x: -wordOffset }, {
+        opacity: 1, x: 0,
+        duration: 1.2, stagger: 0.1, ease: "power3.inOut"
+      }, 0.15)
+    }
+
+    if (subtitle1) {
+      tl.fromTo(subtitle1, { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7 }, 0.35)
+    }
+
+    if (subtitle2) {
+      tl.fromTo(subtitle2, { y: 15, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6 }, 0.45)
+    }
+
+    if (socialIcons.length) {
+      tl.fromTo(socialIcons,
+        { scale: 0.3, opacity: 0 },
+        { scale: 1, opacity: 1, duration: 0.4, stagger: 0.06, ease: 'back.out(1.7)' },
+        0.55
+      )
+    }
+
+    if (ctaButtons.length) {
+      tl.fromTo(ctaButtons,
+        { y: 15, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.5, stagger: 0.08 },
+        0.7
+      )
+    }
+
+    if (scrollIndicator) {
+      tl.fromTo(scrollIndicator,
+        { y: 10, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.5, ease: 'power2.out' },
+        0.85
+      )
+    }
+
+    if (blobs.length) {
+      tl.to(blobs, {
+        opacity: 0.6, scale: 1,
+        duration: 1.2, ease: 'power2.out'
+      }, 1.0)
+    }
+
+    return tl
+  }
+
+  function addScrollEffects() {
+    if (hero) {
+      gsap.to(hero, {
+        y: 60,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: hero,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: 1
+        }
+      })
+    }
+
+    blobs.forEach(blob => {
+      gsap.to(blob, {
+        y: 100,
+        scrollTrigger: {
+          trigger: blob,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 1
+        }
+      })
     })
   }
+
+  const mm = gsap.matchMedia()
+  mm.add('(max-width: 767px)', () => {
+    buildEntrance(18)
+  })
+  mm.add('(min-width: 768px)', () => {
+    buildEntrance(60)
+    addScrollEffects()
+  })
 }
 
 function revealAnimations() {
-  document.querySelectorAll('[data-reveal]').forEach(el => {
-    const delay = (parseFloat(el.getAttribute('data-reveal-delay')) || 0) / 1000
-    gsap.fromTo(el,
-      { opacity: 0, y: 40 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.9,
-        delay,
-        ease: 'power3.out',
-        clearProps: 'all',
-        scrollTrigger: {
-          trigger: el,
-          start: 'top 85%',
-          once: true
+  const reveal = (distance, start) => {
+    document.querySelectorAll('[data-reveal]').forEach(el => {
+      const delay = (parseFloat(el.getAttribute('data-reveal-delay')) || 0) / 1000
+      gsap.fromTo(el,
+        { opacity: 0, y: distance },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.9,
+          delay,
+          ease: 'power3.out',
+          clearProps: 'all',
+          scrollTrigger: {
+            trigger: el,
+            start,
+            once: true
+          }
         }
-      }
-    )
-  })
+      )
+    })
+  }
+
+  const mm = gsap.matchMedia()
+  mm.add('(max-width: 767px)', () => reveal(24, 'top 90%'))
+  mm.add('(min-width: 768px)', () => reveal(40, 'top 85%'))
 }
 
 function timelineAnimations() {
@@ -250,20 +283,5 @@ function timelineAnimations() {
         }
       }
     )
-  })
-}
-
-function parallaxAnimations() {
-  const blobs = document.querySelectorAll('.hero-blob')
-  blobs.forEach(blob => {
-    gsap.to(blob, {
-      y: 100,
-      scrollTrigger: {
-        trigger: blob,
-        start: 'top bottom',
-        end: 'bottom top',
-        scrub: 1
-      }
-    })
   })
 }
