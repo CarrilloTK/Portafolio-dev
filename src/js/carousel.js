@@ -13,10 +13,24 @@ export function initCarousel() {
 
   const embla = EmblaCarousel(viewport, {
     loop: true,
-    align: 'start',
+    align: 'center',
     duration: 30,
     speed: 12
   })
+
+  const slides = [...container.children]
+
+  function updateActive() {
+    const { slideRegistry } = embla.internalEngine()
+    const activeIndexes = slideRegistry[embla.selectedScrollSnap()] || []
+    slides.forEach((slide, i) => {
+      slide.classList.toggle('is-active', activeIndexes.includes(i))
+    })
+  }
+
+  updateActive()
+  embla.on('select', updateActive)
+  embla.on('reInit', updateActive)
 
   const prev = root.querySelector('.embla__prev')
   const next = root.querySelector('.embla__next')
