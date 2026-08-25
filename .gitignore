@@ -3,3 +3,6 @@ dist
 .vscode
 .env
 .env.local
+.agents/
+.unlighthouse/
+skills-lock.json
